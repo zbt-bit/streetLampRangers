@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Street Lamp Dashboard</title>
+    <title>Smart Street Lamp Dashboard - Ultra Compact View</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
         * {
@@ -17,48 +17,49 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             background-attachment: fixed;
             min-height: 100vh;
-            padding: 20px;
+            padding: 15px;
             color: #333;
             overflow-x: hidden;
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 1300px;
             margin: 0 auto;
         }
 
         /* Header */
         .header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 25px;
             animation: fadeInDown 0.6s ease;
         }
 
         .header h1 {
             color: white;
-            font-size: 2.5em;
+            font-size: 2em;
             font-weight: 700;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
             text-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
 
         .header p {
             color: rgba(255,255,255,0.9);
-            font-size: 1.1em;
+            font-size: 1em;
         }
 
         /* Overview Button Style */
         .overview-button {
             display: inline-block;
-            padding: 10px 20px;
+            padding: 8px 15px;
             background: white;
             color: #667eea;
             border: 2px solid #667eea;
-            border-radius: 10px;
+            border-radius: 8px;
             text-decoration: none;
             font-weight: 600;
             transition: all 0.3s ease;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            font-size: 0.9em;
         }
 
         .overview-button:hover {
@@ -71,85 +72,92 @@
         .dashboard-grid {
             display: grid;
             grid-template-columns: repeat(12, 1fr);
-            gap: 20px;
+            gap: 15px;
         }
 
         /* Card Styles */
         .card {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             animation: fadeInUp 0.6s ease;
+            display: flex;
+            flex-direction: column;
         }
 
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
         }
 
         .card h2 {
-            font-size: 1.2em;
+            font-size: 1.1em;
             color: #2d3436;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .card-icon {
-            font-size: 1.5em;
+            font-size: 1.4em;
         }
 
-        /* Grid Positioning */
+        /* Grid Positioning (ULTRA COMPACTED) */
         .time-card {
-            grid-column: span 4;
+            grid-column: span 3;
         }
 
         .solar-card {
-            grid-column: span 4;
+            grid-column: span 3;
+        }
+
+        .health-card {
+            grid-column: span 3;
+            justify-content: space-between;
+        }
+        
+        .camera-card {
+            grid-column: span 3;
         }
 
         .status-card {
-            grid-column: span 4;
+            grid-row: 1 / 3; /* Still spans 2 rows */
+            grid-column: 10 / 13; /* Still takes 3 columns on the right */
         }
         
-        /* NEW: Health Card Positioning */
-        .health-card {
-            grid-column: span 4;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+        /* NEW: Smaller Charts */
+        .chart-card-small {
+            grid-column: span 6; /* Half width */
         }
 
-        .chart-card-large {
-            grid-column: span 8;
+        /* NEW: Alert Log moved below the small charts */
+        .alert-log-card {
+            grid-column: span 6; /* Half width */
         }
-
-        .side-panel {
-            grid-column: span 4;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
+        
         /* Time Display */
         #current-time-display {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 30px;
-            border-radius: 15px;
+            padding: 20px;
+            border-radius: 10px;
             text-align: center;
-            font-size: 1.8em;
+            font-size: 1.5em;
             font-weight: 700;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 3px 10px rgba(102, 126, 234, 0.3);
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         .time-date {
-            font-size: 0.5em;
-            margin-top: 10px;
+            font-size: 0.4em;
+            margin-top: 5px;
             opacity: 0.9;
             font-weight: 400;
         }
@@ -157,77 +165,44 @@
         /* Solar Gauge */
         .gauge-container {
             text-align: center;
-            padding: 20px 10px;
+            padding: 15px 10px;
             position: relative;
-            height: 180px;
+            height: 150px;
         }
         
         #solarGauge {
-            max-height: 120px;
+            max-height: 100px;
         }
 
         .gauge-label {
-            margin-top: 15px;
-            font-size: 1.4em;
-            font-weight: 700;
-            color: #2ecc71;
-        }
-
-        .gauge-percentage {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 2em;
+            margin-top: 10px;
+            font-size: 1.2em;
             font-weight: 700;
             color: #2ecc71;
         }
 
         /* Lamp Status */
         #lamp-status-output {
-            font-size: 1.6em;
+            font-size: 1.4em;
             font-weight: 700;
-            padding: 25px;
+            padding: 20px;
             text-align: center;
-            border-radius: 15px;
-            margin-bottom: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            min-height: 80px;
-        }
-
-        .action-max {
-            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
-            color: white;
-            box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
-        }
-
-        .action-dimmer {
-            background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%);
-            color: white;
-            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.4);
-        }
-
-        .action-off {
-            background: linear-gradient(135deg, #b2bec3 0%, #636e72 100%);
-            color: white;
-            box-shadow: 0 4px 15px rgba(99, 110, 114, 0.4);
-        }
-
-        .action-emergency {
-            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
-            color: white;
-            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
+            gap: 8px;
+            min-height: 70px;
         }
 
         /* Control Form */
         #controlForm {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
+            flex-grow: 1;
         }
 
         .form-autonomous-label {
@@ -236,195 +211,134 @@
         }
 
         select {
-            padding: 12px 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 1em;
-            background: white;
-            cursor: pointer;
+            padding: 10px 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 0.9em;
             transition: all 0.3s ease;
-            font-family: inherit;
-        }
-
-        select:hover {
-            border-color: #667eea;
-        }
-
-        select:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
 
         button {
-            padding: 15px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 1.1em;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            padding: 12px;
+            font-size: 1em;
+            border-radius: 8px;
         }
 
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
-        }
-
-        button:active {
-            transform: translateY(0);
-        }
-
-        /* Camera View */
+        /* Camera View - FIX: Added min-height for better aspect ratio */
         .camera-view {
-            height: 200px;
+            height: auto; /* Allow content to dictate height */
+            min-height: 150px; /* Ensure minimum height for landscape view */
             background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
             color: white;
             display: flex;
             flex-direction: column; 
             align-items: center;
             justify-content: center;
-            border-radius: 15px;
-            font-size: 1.2em;
+            border-radius: 10px;
+            font-size: 1em;
             font-weight: 600;
             position: relative;
             overflow: hidden;
             text-align: center;
-            padding: 10px;
+            padding: 8px;
+            flex-grow: 1;
         }
         
-        /* New: style for the VIDEO inside camera-view */
+        /* Camera Feed - FIX: Ensured full width and used object-fit: cover */
         .camera-view #liveFeedVideo {
             width: 100%; 
             height: 100%; 
-            object-fit: cover; 
+            object-fit: cover; /* This ensures the video covers the container without being squished */
             position: absolute; 
             top: 0; 
             left: 0; 
-            border-radius: 15px;
-            opacity: 0.8; /* Dim the video slightly for text readability */
+            border-radius: 10px;
+            opacity: 0.8;
         }
 
         .camera-view .overlay-content {
             z-index: 10; 
             background: rgba(0,0,0,0.5); 
-            padding: 10px 15px; 
-            border-radius: 10px;
+            padding: 8px 12px;
+            border-radius: 8px;
         }
 
         .camera-view .motion-status {
             font-size: 0.7em;
             font-weight: 400;
-            margin-top: 5px;
+            margin-top: 3px;
             color: #2ecc71;
-        }
-
-        .camera-view::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-            animation: scan 3s infinite;
-            z-index: 11;
-        }
-
-        @keyframes scan {
-            0% { left: -100%; }
-            100% { left: 100%; }
         }
 
         /* Alert Log */
         .alert-log-container {
-            max-height: 200px;
+            max-height: 150px; /* Reduced max height */
             overflow-y: auto;
+            flex-grow: 1;
         }
 
         .alert-log-item {
-            padding: 12px;
-            border-left: 4px solid #667eea;
+            padding: 8px;
+            border-left: 3px solid #667eea;
             background: #f8f9fa;
-            margin-bottom: 10px;
-            border-radius: 8px;
-            font-size: 0.95em;
-            transition: all 0.3s ease;
+            margin-bottom: 5px;
+            border-radius: 6px;
+            font-size: 0.9em;
         }
         
         /* Lamp Health Card Styles */
         .health-status {
-            font-size: 1.5em;
+            font-size: 1.3em;
             font-weight: 700;
             margin-top: 5px;
-            margin-bottom: 15px;
-            transition: color 0.3s;
+            margin-bottom: 10px;
         }
-        .health-status.good { color: #2ecc71; }
-        .health-status.warning { color: #f39c12; }
-        .health-status.critical { color: #e74c3c; }
 
         .health-detail p {
-            margin-bottom: 5px;
-            font-size: 0.9em;
-            color: #555;
+            margin-bottom: 3px;
+            font-size: 0.85em;
         }
-        .health-detail span {
-            font-weight: 600;
-            color: #333;
-        }
-
+        
         /* Responsive Design */
         @media (max-width: 1200px) {
-            .health-card {
-                grid-column: span 12;
+            .status-card {
+                grid-row: auto;
+                grid-column: span 4;
             }
-            .chart-card-large {
-                grid-column: span 12;
+            .chart-card-small, .alert-log-card {
+                grid-column: span 6;
             }
-            .side-panel {
-                grid-column: span 12;
-                flex-direction: row;
+            .time-card, .solar-card, .health-card, .camera-card {
+                grid-column: span 3;
             }
-            .side-panel > .card {
-                flex: 1; /* Make side panel items equal width */
+        }
+
+        @media (max-width: 992px) {
+            .time-card, .solar-card, .health-card, .camera-card, .status-card, .chart-card-small, .alert-log-card {
+                grid-column: span 6;
             }
         }
 
         @media (max-width: 768px) {
-            .time-card, .solar-card, .status-card, .health-card {
+            .time-card, .solar-card, .health-card, .camera-card, .status-card, .chart-card-small, .alert-log-card {
                 grid-column: span 12;
             }
-            .header h1 {
-                font-size: 2em;
-            }
-            .side-panel {
-                flex-direction: column;
-            }
-        }
-
-        /* Loading State */
-        .loading {
-            opacity: 0.6;
-            pointer-events: none;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>🚦 AI Street Lamp Control System</h1>
+            <h1>🚦 AI Street Lamp Control System (Ultra Compact)</h1>
             <p>Real-time monitoring and intelligent decision making</p>
         </div>
 
-        <div style="margin-bottom: 20px;">
+        <div style="margin-bottom: 15px;">
             <a href="overview.html" class="overview-button">⬅️ Back to Fleet Overview</a>
         </div>
         
         <div class="dashboard-grid">
+            
             <div class="card time-card">
                 <h2><span class="card-icon">⏰</span> Current Time</h2>
                 <div id="current-time-display">
@@ -436,7 +350,7 @@
             <div class="card solar-card">
                 <h2><span class="card-icon">🔋</span> Solar Charging Level</h2>
                 <div class="gauge-container">
-                    <canvas id="solarGauge" height="120"></canvas>
+                    <canvas id="solarGauge" height="100"></canvas>
                     <div class="gauge-label" id="solar-charge-label">Loading...</div>
                 </div>
             </div>
@@ -452,8 +366,24 @@
                     <p>Firmware Version: <span id="firmware">v3.1.2</span></p>
                 </div>
             </div>
-            
-            <div class="card status-card" style="grid-row: 1 / 3; grid-column: 9 / 13;">
+
+            <div class="card camera-card">
+                <h2><span class="card-icon">📹</span> Camera Feed</h2>
+                <div class="camera-view">
+                    <video id="liveFeedVideo" loop muted autoplay playsinline>
+                        <source id="videoSource" src="videos/traffic.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    
+                    <div class="overlay-content">
+                        <p style="margin: 0;">LIVE FEED (Simulated Video from Edge CV)</p>
+                        <p class="motion-status" id="camera-motion-status">Motion Status: None</p>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="card status-card">
                 <h2><span class="card-icon">💡</span> Lamp Control</h2>
                 <div id="lamp-status-output">
                     Awaiting AI Decision...
@@ -461,7 +391,7 @@
                 
                 <form id="controlForm">
                     <div class="form-autonomous-label">
-                        <p style="font-size: 0.9em; color: #667eea; font-weight: 600; margin-bottom: 5px;">Autonomous Inputs: Time, Temp, & Weather are Live</p>
+                        <p style="font-size: 0.85em; color: #667eea; font-weight: 600; margin-bottom: 5px;">Autonomous Inputs: Time, Temp, & Weather are Live</p>
                     </div>
                     
                     <select id="visionInput">
@@ -479,40 +409,23 @@
                 </form>
             </div>
             
-            <div class="card chart-card-large" style="grid-column: span 8;">
+            <div class="card chart-card-small" style="grid-column: span 6;">
                 <h2><span class="card-icon">📊</span> Operational Time Breakdown (24h)</h2>
                 <canvas id="operationalTimeChart"></canvas>
             </div>
 
-            <div class="side-panel">
-                <div class="card">
-                    <h2><span class="card-icon">📹</span> Camera Feed</h2>
-                    <div class="camera-view">
-                        <video id="liveFeedVideo" loop muted autoplay playsinline>
-                            <source id="videoSource" src="traffic.mp4" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
-                        
-                        <div class="overlay-content">
-                            <p style="margin: 0;">LIVE FEED (Simulated Video from Edge CV)</p>
-                            <p class="motion-status" id="camera-motion-status">Motion Status: None</p>
-                        </div>
-                        
-                        </div>
-                </div>
-                <div class="card">
-                    <h2><span class="card-icon">🔔</span> Alert Log</h2>
-                    <div class="alert-log-container">
-                        <div class="alert-log-item">09:00: Power fluctuation detected</div>
-                        <div class="alert-log-item">08:30: AI decision: MAX OUTPUT</div>
-                        <div class="alert-log-item">08:00: System fully operational</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card chart-card-large" style="grid-column: span 12;">
+            <div class="card chart-card-small" style="grid-column: span 6;">
                 <h2><span class="card-icon">🌡️</span> Real-Time Weather Conditions (Temp, Humidity, Clouds)</h2>
                 <canvas id="weatherChart"></canvas>
+            </div>
+            
+            <div class="card alert-log-card" style="grid-column: span 6;">
+                <h2><span class="card-icon">🔔</span> Alert Log</h2>
+                <div class="alert-log-container">
+                    <div class="alert-log-item">09:00: Power fluctuation detected</div>
+                    <div class="alert-log-item">08:30: AI decision: MAX OUTPUT</div>
+                    <div class="alert-log-item">08:00: System fully operational</div>
+                </div>
             </div>
         </div>
     </div>
@@ -524,14 +437,14 @@
         const outputDiv = document.getElementById('lamp-status-output');
         const cameraMotionStatus = document.getElementById('camera-motion-status');
         
-        // Corrected Video Mappings to use your new files (ensure these files exist)
+        // Video Mappings
         const VISION_VIDEOS = {
-            clear_road: '1129.mp4',
-            car_detected: 'traffics.mp4',
-            crash_detected: 'Emergency.mp4'
+            clear_road: 'videos/nighttime_withoutcar.mp4',
+            car_detected: 'videos/Night_withcardetected.mp4',
+            crash_detected: 'videos/accidents.mp4'
         };
 
-        // **NEW: Define the Automated Scenario Sequence**
+        // Automated Scenario Sequence
         const SCENARIO_SEQUENCE = [
             { 
                 id: 'clear', 
@@ -651,8 +564,8 @@
                         legend: { 
                             position: 'bottom',
                             labels: {
-                                padding: 20,
-                                font: { size: 13 }
+                                padding: 15,
+                                font: { size: 12 }
                             }
                         },
                         tooltip: {
@@ -694,7 +607,7 @@
                             'rgba(52, 73, 94, 1)'
                         ],
                         borderWidth: 2,
-                        borderRadius: 10
+                        borderRadius: 8
                     }]
                 },
                 options: {
@@ -706,7 +619,8 @@
                             grid: { color: 'rgba(0, 0, 0, 0.05)' },
                             title: {
                                 display: true,
-                                text: 'Value (°C or %)'
+                                text: 'Value (°C or %)',
+                                font: { size: 12 }
                             }
                         },
                         x: {
@@ -825,11 +739,7 @@
             }
         }
         
-        // Remove manual form listener to allow automated control
-        // form.addEventListener('submit', ...); 
-
-
-        // **NEW: Function to start the next scenario in the sequence**
+        // Function to start the next scenario in the sequence
         function startNextScenario() {
             const scenario = SCENARIO_SEQUENCE[currentScenarioIndex];
             
@@ -883,7 +793,7 @@
             const alertContainer = document.querySelector('.alert-log-container');
             const newAlert = document.createElement('div');
             newAlert.className = 'alert-log-item';
-            newAlert.textContent = `${timeStr}: ${message}`;
+            newAlert.innerHTML = `${timeStr}: ${message}`;
             
             alertContainer.insertBefore(newAlert, alertContainer.firstChild);
             
@@ -910,5 +820,3 @@
     </script>
 </body>
 </html>
-
-
