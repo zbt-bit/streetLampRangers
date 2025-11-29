@@ -6,10 +6,6 @@ The system demonstrates intelligent traffic and emergency decision-making by loa
 
 ⚠️ CRITICAL SETUP: Project Structure to ensure the Flask server runs correctly and can serve both your HTML pages (as templates) and your assets (as static files), the project directory must be reorganized.
 Action Required for Examiner: Please perform the following steps before running app.py:
-1. Create a folder named templates.
-2. Move index.html and overview.html into the templates folder.
-3. Create a folder named static.
-4. Move the videos (1129.mp4, Emergency.mp4, traffics.mp4) into a new folder named videos inside static.
 
 Your final project structure should look like this:
 project_root/
@@ -18,14 +14,11 @@ project_root/
 - street_lamp_model.joblib
 - train_model.py
 - weather.csv
-- templates/                 <-- Flask requires this folder for HTML files
-    - index.html
-    - overview.html
-- static/                    <-- Flask requires this folder for browser assets
-    - videos/
-         - 1129.mp4         (Clear Road)
-         - Emergency.mp4    (Crash/Emergency)
-         - traffics.mp4     (Vehicle Detected)
+- index.html
+- overview.html
+- 1129.mp4         (Clear Road)
+- Emergency.mp4    (Crash/Emergency)
+- traffics.mp4     (Vehicle Detected)
    
 🚀 How to Set Up and Run the Application
 1. Prerequisites: You must have Python 3 installed and the following libraries available. We recommend using your Anaconda Prompt or terminal:
